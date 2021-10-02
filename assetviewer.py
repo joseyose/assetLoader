@@ -1,84 +1,71 @@
-from importlib import reload
-from geometry_finder import FindAssets
+# from importlib import reload
+import geometry_finder
 from PyQt5 import QtWidgets, QtCore, QtGui, uic
 import sys
 import os
-import resources
-import subprocess
-import time
-import pprint
 
-
-# reload(FindAssets)
+# reload(geometry_finder)
 
 # start class
 class AssetViewer(QtWidgets.QDialog):
     def __init__(self):
         super(AssetViewer, self).__init__()
-        print("Running AssetViewer Constructor")
+        # print("Running AssetViewer Constructor")
 
-        # windowtile
+        # windowtile --- this call is not working, so I'm guessing I'm calling
+        # the wrong thing
         self.setWindowTitle("Asset Viewer - [BETA]")
-        # self.resize(600, 600)
-        uic.loadUi("dialog.ui", self)
+        uic.loadUi("./ui/dialog.ui", self)
 
-        self.build_ui()
-        self.path_line.editingFinished.connect(self.update_path)
-
-        self.p = None
+        self.configure_ui()
         self.workers = []
-        # pprint.pprint(self.assets)
 
-    def build_ui(self):
-        # layout = QtWidgets.QVBoxLayout(self)
-        #
-        # btn_widget = QtWidgets.QWidget()
-        # btn_layout = QtWidgets.QHBoxLayout(btn_widget)
-        # layout.addWidget(btn_widget)
-
-        # Directory line
-        # label_dir = QtWidgets.QLabel("Assets Directory:")
-        # self.path_line = QtWidgets.QLineEdit()
+    def configure_ui(self):
+        """
+        Configures the main sections of the ui like buttons and labels.
+        This used to build the ui from scratch here before switching
+        over to "ui" files.
+        :return:
+            None
+        """
+        # Directory line event for when a user hits enter after typing their
+        # desired directory
         self.path_line.returnPressed.connect(self.update_path)
-
-        # btn_browser = QtWidgets.QPushButton("...")
-        # btn_browser = QtWidgets.QToolButton()
-        # btn_browser.setText("...")
-        # btn_browser.clearFocus()
+        # Browser button events
         self.btn_browser.clicked.connect(self.load_browser)
 
-        # btn_layout.addWidget(label_dir)
-        # btn_layout.addWidget(self.path_line)
-        # btn_layout.addWidget(btn_browser)
-
-        # self.list_widget = QtWidgets.QListWidget()
-        # layout.addWidget(self.list_widget)
-
-        #############################################
-        # bottom_widget = QtWidgets.QWidget()
-        # bottom_layout = QtWidgets.QHBoxLayout(bottom_widget)
-        # layout.addWidget(bottom_widget)
-
-        # btn_load = QtWidgets.QPushButton("Load")
+        # Load button events
         self.btn_load.clicked.connect(self.load_asset)
         self.btn_load.clearFocus()
-        # btn_close = QtWidgets.QPushButton("Close")
+        # Close button events
         self.btn_close.clicked.connect(self.close)
 
-        icon = QtGui.QPixmap("./resources/box.png")
+        # Set up the image we use for the title area
+        icon = QtGui.QPixmap("./ui/resources/box.png")
         self.lbl_icon.setPixmap(icon)
 
-        # bottom_layout.addWidget(btn_load)
-        # bottom_layout.addWidget(btn_close)
-
     def populate(self):
+        """
+        Fills up the list widget with the available assets in the directory
+        provided by the user.
+        :return:
+            None
+        """
+        # Get string from the ui directory path line
         dir_path = self.path_line.text()
-        self.assets = FindAssets(directory=dir_path)
-        if self.assets:
-            for name, info in self.assets.items():
-                self.list_widget.addItem(name)
-        else:
-            print("No assets available. Double check your path")
+        # Run external module that finds the stuff in the directory assigned.
+        # This returns a dictionary we use later on
+        try:
+            self.assets = geometry_finder.FindAssets(directory=dir_path)
+
+            if self.assets:
+                for name, info in self.assets.items():
+                    self.list_widget.addItem(name)
+            else:
+                sys.stderr.write(f"No assets available in {dir_path}\n")
+
+        except Exception as err:
+            sys.stderr.write(f"{err}\n")
 
     def load_browser(self):
         # Load the file dialog
@@ -88,7 +75,6 @@ class AssetViewer(QtWidgets.QDialog):
             self.populate()
 
     def update_path(self):
-        print("updating path")
         self.list_widget.clear()
         self.populate()
 
@@ -102,15 +88,11 @@ class AssetViewer(QtWidgets.QDialog):
             asset_name = asset[0].text()
             ext = self.assets[asset_name]["type"]
             self.asset_path = os.path.join(self.path_line.text(), f"{asset_name}{ext}")
-            # print(self.asset_path)
 
-            worker = [False, self.asset_path, False]
-            # self.workers.insert(0, worker)
+            worker = [False, self.asset_path]
             self.workers.append(worker)
 
         self.run()
-
-        # print(self.workers)
 
     def run(self):
 
@@ -118,13 +100,13 @@ class AssetViewer(QtWidgets.QDialog):
             index = self.workers.index(info)
             worker = info[0]
             name = info[1]
-            used = info[2]
+
             # if worker is None and used is False:
             if worker is False:
                 self.workers[index][0] = QtCore.QProcess()
                 self.workers[index][0].start("gplay", [name])
                 self.workers[index][0].finished.connect(lambda: self.process_finished(index))
-                self.workers[index][0].stateChanged.connect(self.handle_state)
+                # self.workers[index][0].stateChanged.connect(self.handle_state)
 
     def process_finished(self, index):
         self.workers[index][0] = True

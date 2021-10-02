@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Assets Loader - [BETA]</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
@@ -134,7 +134,7 @@ QScrollBar:vertical {
       <enum>QListView::Adjust</enum>
      </property>
      <property name="viewMode">
-      <enum>QListView::IconMode</enum>
+      <enum>QListView::ListMode</enum>
      </property>
     </widget>
    </item>
