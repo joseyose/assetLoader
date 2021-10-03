@@ -38,4 +38,4 @@ python3 ./assetviewer.py
 
 ## License
 ---
-See the LICENSE file for license rights and limitations (MIT).
+See the [LICENSE](https://github.com/joseyose/assetLoader/blob/main/LICENSE) file for license rights and limitations (MIT).
