@@ -23,8 +23,11 @@ class Window(QtWidgets.QDialog, Ui_Dialog):
         self.configure_ui()
         self.workers = []
 
+        self.list_widget.itemClicked.connect(self._updateStateWhenSelected)
+
     def _setupUI(self):
         self.setupUi(self)
+        self.btn_load.setEnabled(False)
 
     def configure_ui(self):
         """
@@ -136,23 +139,5 @@ class Window(QtWidgets.QDialog, Ui_Dialog):
         state_name = states[state]
         print(f"State changed: {state_name}")
 
-        # if state_name == "Not running":
-        #     self.workers.remove(index)
-        #     print("POP IT")
-
-
-# def show_ui():
-#     app = QtWidgets.QApplication(sys.argv)
-#     ui = AssetViewer()
-#     ui.show()
-#     return ui
-
-# if __name__ == "__main__":
-#     app = QtWidgets.QApplication(sys.argv)
-#     main = AssetViewer()
-#     main.show()
-
-#     try:
-#         sys.exit(app.exec())
-#     except SystemExit:
-#         print("Closing window...")
+    def _updateStateWhenSelected(self):
+        self.btn_load.setEnabled(True)
