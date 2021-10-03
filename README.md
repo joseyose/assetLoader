@@ -28,7 +28,7 @@ pip3 install pyqt5==5.15.4
 python3 ./assetloader.py
 ```
 ## Usage
-`python3 ./assetViewer.py`
+`python3 ./assetloader.py`
 
 ![](./media/assetloader_001.gif)
 
