@@ -25,7 +25,7 @@ Run the following commands:
 pip3 install pyqt5==5.15.4
 
 # Run the application
-python3 ./assetviewer.py
+python3 ./assetloader.py
 ```
 ## Usage
 `python3 ./assetViewer.py`
