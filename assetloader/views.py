@@ -123,7 +123,8 @@ class Window(QtWidgets.QDialog, Ui_Dialog):
         return selected
 
     def load_asset(self):
-        """[summary]
+        """Retrieves the selected asset from the list and adds a new worker 
+        to our worker stack and calls `self.run`
         """
         asset = self.get_selection()
         if asset:
@@ -136,6 +137,9 @@ class Window(QtWidgets.QDialog, Ui_Dialog):
         self.run()
 
     def run(self):
+        """Checks our worker stack and anyone not running already it will 
+        create a new QProcess and launch the `GPlay` application
+        """
 
         for info in self.workers:
             index = self.workers.index(info)
@@ -150,6 +154,13 @@ class Window(QtWidgets.QDialog, Ui_Dialog):
                 # self.workers[index][0].stateChanged.connect(self.handle_state)
 
     def process_finished(self, index):
+        """Changes the status of the worker thread to done after the 
+        user closes it
+
+        Args:
+            index ([int]): Index of the worker in the stack that needs 
+            to update
+        """
         self.workers[index][0] = True
 
     def handle_state(self, state):
@@ -170,4 +181,5 @@ class Window(QtWidgets.QDialog, Ui_Dialog):
         print(f"State changed: {state_name}")
 
     def _updateStateWhenSelected(self):
+        """Enables the load button"""
         self.btn_load.setEnabled(True)
