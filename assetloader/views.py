@@ -1,26 +1,33 @@
-# from importlib import reload
+'''
+/*
+ * views.py
+ * 
+ * by joseyose, Oct 2021
+ *
+ * Implementation of the Window class. This handles all of the logic for the 
+ * PyQt5 GUI. It provides the AssetLoader main window. 
+ *
+ */
+'''
+
+import importlib
 from .getassets import FindAssets
+# from getassets import FindAssets
 from .ui.window import Ui_Dialog
 from PyQt5 import QtWidgets, QtCore, QtGui, uic
 from pathlib import Path
 import sys
 import os
-from .ui.resources import resources
 
-# reload(geometry_finder)
-
-FILTERS = ";;".join(
-    (
-        "OBJ Files (*.obj)",
-        "ABC Files (*.abc)",
-        "FBX FIles (*.FBX)",
-        "BGEO FIles (*.bgeo)",
-        "All Files (*.*)"
-    )
-)
+# from importlib import reload
+# reload
 
 class Window(QtWidgets.QDialog, Ui_Dialog):
+    """Inherits from QDialog, Ui_Dialog. Sets up all of the necessary 
+    GUI logic.
+    """
     def __init__(self):
+        """inits Window"""
         super(Window, self).__init__()
 
         self._setupUI()
@@ -31,6 +38,9 @@ class Window(QtWidgets.QDialog, Ui_Dialog):
         self.list_widget.itemClicked.connect(self._updateStateWhenSelected)
 
     def _setupUI(self):
+        """Initialize all of the ui that was created in qtdesigner. 
+        It also disables the load button at startup.
+        """
         self.setupUi(self)
         self.btn_load.setEnabled(False)
 
@@ -39,8 +49,6 @@ class Window(QtWidgets.QDialog, Ui_Dialog):
         Configures the main sections of the ui like buttons and labels.
         This used to build the ui from scratch here before switching
         over to "ui" files.
-        :return:
-            None
         """
         # Directory line event for when a user hits enter after typing their
         # desired directory
@@ -62,8 +70,6 @@ class Window(QtWidgets.QDialog, Ui_Dialog):
         """
         Fills up the list widget with the available assets in the directory
         provided by the user.
-        :return:
-            None
         """
         # Get string from the ui directory path line
         dir_path = self.path_line.text()
@@ -74,7 +80,10 @@ class Window(QtWidgets.QDialog, Ui_Dialog):
 
             if self.assets:
                 for name, info in self.assets.items():
-                    self.list_widget.addItem(name)
+
+                    self.list_widget.addItem(info["fullname"])
+                    # a = info["fullname"]
+                    # print(a)
             else:
                 sys.stderr.write(f"No assets available in {dir_path}\n")
 
@@ -82,6 +91,9 @@ class Window(QtWidgets.QDialog, Ui_Dialog):
             sys.stderr.write(f"{err}\n")
 
     def load_browser(self):
+        """Handles the logic for loading up a file dialog, and calling the
+        populate function after acquiring a path. 
+        """
         # Set initial directory based on your home directory
         if self.path_line.text():
             initDir = self.path_line.text()
@@ -95,19 +107,28 @@ class Window(QtWidgets.QDialog, Ui_Dialog):
             self.populate()
 
     def update_path(self):
+        """Updates the list of assets available to load if the user updates
+        the paths directly instead of going through the file dialog.
+        """
         self.list_widget.clear()
         self.populate()
 
     def get_selection(self):
+        """Collects the item the user has a selected
+
+        Returns:
+            A list containing the assets selected by the user.
+        """
         selected = self.list_widget.selectedItems()
         return selected
 
     def load_asset(self):
+        """[summary]
+        """
         asset = self.get_selection()
         if asset:
             asset_name = asset[0].text()
-            ext = self.assets[asset_name]["type"]
-            self.asset_path = os.path.join(self.path_line.text(), f"{asset_name}{ext}")
+            self.asset_path = self.assets[asset_name]["path"]
 
             worker = [False, self.asset_path]
             self.workers.append(worker)
