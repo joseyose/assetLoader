@@ -26,10 +26,14 @@ class FindAssets(dict):
         else:
             raise Exception(f"{directory} does not exist!")
 
-if __name__ == "__main__":
+def main():
     count = len(sys.argv)
     if count > 1:
         directory = sys.argv[1]
         FindAssets(directory=directory)
     else:
-        sys.stderr.write("Usage: python3 ./geometry_finder.py directory")
+        sys.stderr.write("Usage: python3 ./getassets.py directory")
+
+
+if __name__ == "__main__":
+    main()

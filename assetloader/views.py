@@ -2,24 +2,29 @@
 from .getassets import FindAssets
 from .ui.window import Ui_Dialog
 from PyQt5 import QtWidgets, QtCore, QtGui, uic
+from pathlib import Path
 import sys
 import os
 from .ui.resources import resources
 
 # reload(geometry_finder)
 
-# start class
+FILTERS = ";;".join(
+    (
+        "OBJ Files (*.obj)",
+        "ABC Files (*.abc)",
+        "FBX FIles (*.FBX)",
+        "BGEO FIles (*.bgeo)",
+        "All Files (*.*)"
+    )
+)
+
 class Window(QtWidgets.QDialog, Ui_Dialog):
     def __init__(self):
         super(Window, self).__init__()
-        # print("Running AssetViewer Constructor")
 
-        # windowtile --- this call is not working, so I'm guessing I'm calling
-        # the wrong thing
-        # self.setWindowTitle("Asset Viewer - [BETA]")
-        # uic.loadUi("./ui/dialog.ui", self)
         self._setupUI()
-
+        self.setWindowTitle("AssetLoader - [BETA]")
         self.configure_ui()
         self.workers = []
 
@@ -51,7 +56,6 @@ class Window(QtWidgets.QDialog, Ui_Dialog):
 
         # Set up the image we use for the title area
         icon = QtGui.QPixmap("./assetloader/ui/resources/box.png")
-        print(os.getcwd())
         self.lbl_icon.setPixmap(icon)
 
     def populate(self):
@@ -78,8 +82,14 @@ class Window(QtWidgets.QDialog, Ui_Dialog):
             sys.stderr.write(f"{err}\n")
 
     def load_browser(self):
+        # Set initial directory based on your home directory
+        if self.path_line.text():
+            initDir = self.path_line.text()
+        else:
+            initDir = str(Path.home())
         # Load the file dialog
-        path = QtWidgets.QFileDialog.getExistingDirectory()
+        path = QtWidgets.QFileDialog.getExistingDirectory(self, 
+        "Select Directory Containing 3D Objects", initDir)
         if path:
             self.path_line.setText(path)
             self.populate()
@@ -120,7 +130,6 @@ class Window(QtWidgets.QDialog, Ui_Dialog):
 
     def process_finished(self, index):
         self.workers[index][0] = True
-        # self.workers[index][2] = True
 
     def handle_state(self, state):
         """This sends to `stdout` what the status of the application is
