@@ -12,7 +12,6 @@
 
 import importlib
 from .getassets import FindAssets
-# from getassets import FindAssets
 from .ui.window import Ui_Dialog
 from PyQt5 import QtWidgets, QtCore, QtGui, uic
 from pathlib import Path
