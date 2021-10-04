@@ -2,3 +2,17 @@ assetloader/__pycache__/*
 assetloader/ui/__pycache__/*
 __pycache__/*
 .idea/*
+
+.mypy_cache/*
+.pytest_cache/*
+.coverage
+.tox/*
+.venv/*
+.vscode/*
+
+#tests
+tests/__pycache__/*
+
+#src
+src/assetloader/__pycache__/*
+src/assetloader.egg-info/*

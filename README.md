@@ -1,5 +1,6 @@
 # AssetLoader
----
+![Tests](https://github.com/joseyose/assetLoader/actions/workflows/tests.yml/badge.svg)
+
 AssetLoader is an application that loads 3D objects, ie: `obj`, `fbx`, `abc`, `bgeo`, into [GPlay](https://www.sidefx.com/docs/houdini/ref/utils/gplay.html) which is a viewport similar to the one found in [Houdini](https://www.sidefx.com/) for quick previewing. 
 
 You can rotate, tumble, zoom and even render the viewed geometry. 
