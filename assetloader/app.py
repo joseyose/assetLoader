@@ -1,6 +1,13 @@
-# -*- coding: utf-8 -*-
-# rprename/app.py
-
+'''
+/*
+ * app.py
+ * 
+ * by joseyose, Oct 2021
+ *
+ * Main driver for our GUI application. 
+ *
+ */
+'''
 """This module provides the AssetLoader application."""
 
 import sys
