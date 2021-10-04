@@ -1,3 +1,4 @@
 assetloader/__pycache__/*
-__init__.py
+assetloader/ui/__pycache__/*
+__pycache__/*
 .idea/*
