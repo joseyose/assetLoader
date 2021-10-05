@@ -58,7 +58,7 @@ class Window(QtWidgets.QDialog, Ui_Dialog):
         self.btn_close.clicked.connect(self.close)
 
         # Set up the image we use for the title area
-        icon = QtGui.QPixmap("./assetloader/ui/resources/box.png")
+        icon = QtGui.QPixmap("./src/assetloader/ui/resources/box.png")
         self.lbl_icon.setPixmap(icon)
 
     def populate(self):

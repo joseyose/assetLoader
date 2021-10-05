@@ -9,7 +9,7 @@
  */
 '''
 
-# from assetloader.app import main
+from src.assetloader.app import main
 
-# if __name__ == "__main__":
-#     main()
+if __name__ == "__main__":
+    main()

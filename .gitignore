@@ -16,3 +16,5 @@ tests/__pycache__/*
 #src
 src/assetloader/__pycache__/*
 src/assetloader.egg-info/*
+src/assetloader/ui/__pycache__/*
+src/assetloader/py.typed
