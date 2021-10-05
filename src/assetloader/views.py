@@ -14,6 +14,7 @@ from .getassets import FindAssets
 from .ui.window import Ui_Dialog
 from PyQt5 import QtWidgets, QtCore, QtGui
 from pathlib import Path
+from .ui.resources import resources
 import sys
 
 
@@ -57,9 +58,26 @@ class Window(QtWidgets.QDialog, Ui_Dialog):
         # Close button events
         self.btn_close.clicked.connect(self.close)
 
-        # Set up the image we use for the title area
-        icon = QtGui.QPixmap("./src/assetloader/ui/resources/box.png")
-        self.lbl_icon.setPixmap(icon)
+        # Set up the image we use for the title area --- DON'T need to do this with the resources setup
+        # icon = QtGui.QPixmap("./src/assetloader/ui/resources/box.png")
+        # icon = QtGui.QPixmap(":/icons/box")
+        # self.lbl_icon.setPixmap(icon)
+
+        # load the fontdatbase
+        font_db = QtGui.QFontDatabase()
+        font_db.addApplicationFont(":fonts/jbmono-regular")
+
+        # DEBUG of FONTS
+        # print(font_db.families())
+        # for i in font_db.families():
+        #     print(i)
+
+        # Manual set up for future reference
+        # jbmono_regular = QtGui.QFont()
+        # jbmono_regular.setFamily("JetBrains Mono")
+        # jbmono_regular.setBold(True)
+        # jbmono_regular.setPointSize(20)
+        # self.btn_load.setFont(jbmono_regular)\
 
     def populate(self):
         """

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'dialog.ui'
+# Form implementation generated from reading ui file '.\dialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -131,5 +131,4 @@ class Ui_Dialog(object):
         self.btn_browser.setText(_translate("Dialog", "..."))
         self.btn_load.setText(_translate("Dialog", "Load"))
         self.btn_close.setText(_translate("Dialog", "Close"))
-# import resources_rc
-# from .ui.resources import resources
+from .resources import resources
