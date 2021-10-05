@@ -14,7 +14,6 @@ from .getassets import FindAssets
 from .ui.window import Ui_Dialog
 from PyQt5 import QtWidgets, QtCore, QtGui
 from pathlib import Path
-from .ui.resources import resources
 import sys
 
 
