@@ -2,4 +2,8 @@
   <qresource prefix="icons">
     <file alias="box">box.png</file>
   </qresource>
+  <qresource prefix="fonts">
+    <file alias="jbmono-regular">JetBrainsMono-Regular.ttf</file>
+  </qresource>
+
 </RCC>
