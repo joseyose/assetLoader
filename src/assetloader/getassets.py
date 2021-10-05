@@ -57,7 +57,6 @@ def main():
     """Handles the main logic for launching this file directly"""
     count = len(sys.argv)
     if count == 2 and os.path.exists(sys.argv[1]):
-        # if os.path.exists(sys.argv[1]):
             directory = sys.argv[2]
             FindAssets(directory=directory)
     else:
