@@ -1,5 +1,6 @@
 import pytest
 import sys
+from assetloader.views import Window
 
 
 @pytest.fixture
@@ -12,3 +13,11 @@ def capture_stderr(monkeypatch):
 
     monkeypatch.setattr(sys.stderr, "write", fake_write)
     return buffer
+
+
+@pytest.fixture
+def app_test(qtbot):
+    test_app = Window()
+    qtbot.addWidget(test_app)
+
+    return test_app
