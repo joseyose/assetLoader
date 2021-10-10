@@ -1,8 +1,4 @@
-assetloader/__pycache__/*
-assetloader/ui/__pycache__/*
-__pycache__/*
 .idea/*
-
 .mypy_cache/*
 .pytest_cache/*
 .coverage
@@ -10,12 +6,5 @@ __pycache__/*
 .venv/*
 .vscode/*
 
-#tests
-tests/__pycache__/*
-
-#src
-src/assetloader/__pycache__/*
-src/assetloader.egg-info/*
-src/assetloader/ui/__pycache__/*
-src/assetloader/ui/resources/__pycache__/*
-src/assetloader/py.typed
+**/*.pyc
+**/assetloader.egg-info/*
