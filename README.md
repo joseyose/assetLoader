@@ -26,10 +26,10 @@ Run the following commands:
 pip3 install pyqt5==5.15.4
 
 # Run the application
-python3 ./assetloader.py
+python3 ./app_assetloader.py
 ```
 ## Usage
-`python3 ./assetloader.py`
+`python3 ./app_assetloader.py`
 
 ![](./media/assetloader_001.gif)
 
